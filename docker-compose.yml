@@ -1,0 +1,19 @@
+version: "3.9"
+
+
+services:
+
+  stormbian:
+    image: jamesstorm/stormbian
+    container_name: stormbian
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+    ports:
+      - 223:22
+    volumes:
+      - ${APPDATA}:/appdata
+    restart: always
+    tty: true
+
+    
