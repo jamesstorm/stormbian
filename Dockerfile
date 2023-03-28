@@ -1,7 +1,7 @@
 FROM debian
 
-ENV user=acme
-ENV password=acme
+ENV user=james
+ENV password=james
 
 #COPY appdata/setup /setup
 RUN apt-get update
@@ -35,10 +35,27 @@ RUN apt-get install \
     -y
 RUN apt-get upgrade -y
 
+# GitHub CLI
+RUN type -p curl >/dev/null || (sudo apt update && sudo apt install curl -y)
+RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+    && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+    && sudo apt update \
+    && sudo apt install gh -y
+#RUN gh auth login
+#RUN gh repo clone jamesstorm/prime /home/$USERNAME/prime
+#RUN cp -R /home/$USERNAME/prime/.aws /home/$USERNAME
+#RUN sudo cp -R /home/$USERNAME/.aws /root/
+
+
 # NEOVIM 
 RUN wget https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb
 RUN dpkg -i --force-overwrite ./nvim-linux64.deb
 RUN rm nvim-linux64.deb
+
+RUN curl -LO https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb
+RUN dpkg -i ripgrep_13.0.0_amd64.deb
+RUN rm ripgrep_13.0.0_amd64.deb
 
 # CREATE THE USER
 RUN groupadd -g 1000 ${user} 
