@@ -90,4 +90,7 @@ RUN git clone https://github.com/erikw/tmux-powerline.git /home/${user}/.config/
 # MAKE SURE THE USER OWNS ALL THE THINGS IN THEIR HOME
 RUN chown -R ${user}:${user} /home/${user}
 
+RUN git config --global user.name "James Storm"
+RUN git config --global user.email "jamesstorm@gmail.com"
+
 ENTRYPOINT service ssh restart && bash
