@@ -76,21 +76,19 @@ RUN git clone https://github.com/zsh-users/zsh-autosuggestions /home/${user}/.oh
 
 # MY DOTFILES
 RUN git clone https://github.com/jamesstorm/dotfiles /home/${user}/dotfiles
+RUN ls -al /home/${user}/dotfiles
 RUN rm -rf /home/${user}/.zshrc
 RUN rm -rf /home/${user}/.tmux.conf
 RUN rm -rf /home/${user}/.p10k.sh
 RUN ln /home/${user}/dotfiles/.zshrc /home/${user}/.zshrc
 RUN ln /home/${user}/dotfiles/.tmux.conf /home/${user}/.tmux.conf
 RUN ln /home/${user}/dotfiles/.p10k.zsh /home/${user}/.p10k.zsh
-
+RUN ln /home/${user}/dotfiles/.gitconfig /home/${user}/.gitconfig 
 # TMUX POWERLINE
 RUN git clone https://github.com/erikw/tmux-powerline.git /home/${user}/.config/tmux/tmux-powerline
 
 
 # MAKE SURE THE USER OWNS ALL THE THINGS IN THEIR HOME
 RUN chown -R ${user}:${user} /home/${user}
-
-RUN git config --global user.name "James Storm"
-RUN git config --global user.email "jamesstorm@gmail.com"
 
 ENTRYPOINT service ssh restart && bash
