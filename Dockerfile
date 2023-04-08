@@ -49,9 +49,23 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | s
 
 
 # NEOVIM 
-RUN wget https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb
+RUN wget https://github.com/neovim/neovim/releases/download/v0.8.3/nvim-linux64.deb
+#RUN wget https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb
 RUN dpkg -i --force-overwrite ./nvim-linux64.deb
 RUN rm nvim-linux64.deb
+
+
+# INSTALL PACKER FOR NEOVIM
+RUN git clone --depth 1 https://github.com/wbthomason/packer.nvim /home/${user}/.local/share/nvim/site/pack/packer/start/packer.nvim
+
+
+
+#RUN wget https://github.com/neovim/neovim/releases/download/v0.8.3/nvim.appimage
+#RUN wget https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
+#RUN chmod +x nvim.appimage
+#RUN ./nvim.appimage --appimage-extract 
+#RUN mv ./squashfs-root/usr/bin/nvim /usr/local/bin/nvim
+#RUN chmod +x /usr/local/bin/nvim
 
 RUN curl -LO https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb
 RUN dpkg -i ripgrep_13.0.0_amd64.deb
@@ -66,8 +80,6 @@ RUN useradd -rm -d /home/${user} -s /bin/zsh -u 1000 -g 1000 -G sudo -p "$(opens
 # SET UP NEOVIM CONFIG WITH MY PREFS 
 RUN git clone https://github.com/jamesstorm/nvim /home/${user}/.config/nvim
 
-# INSTALL PACKER FOR NEOVIM
-RUN git clone --depth 1 https://github.com/wbthomason/packer.nvim /home/${user}/.local/share/nvim/site/pack/packer/start/packer.nvim
 
 # OHMYZSH AND POWERLINE10K
 RUN git clone https://github.com/ohmyzsh/ohmyzsh.git /home/${user}/.oh-my-zsh
