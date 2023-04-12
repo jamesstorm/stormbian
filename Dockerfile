@@ -49,20 +49,20 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | s
 
 
 # NEOVIM 0.8.6
-#RUN wget https://github.com/neovim/neovim/releases/download/v0.8.3/nvim-linux64.deb
-#RUN dpkg -i --force-overwrite ./nvim-linux64.deb
-#RUN rm nvim-linux64.deb
+RUN wget https://github.com/neovim/neovim/releases/download/v0.8.3/nvim-linux64.deb
+RUN dpkg -i --force-overwrite ./nvim-linux64.deb
+RUN rm nvim-linux64.deb
 
 
 
 
 # NEOVIM 0.9
 #RUN wget https://github.com/neovim/neovim/releases/download/v0.8.3/nvim.appimage
-RUN wget https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
-RUN chmod +x nvim.appimage
-RUN ./nvim.appimage --appimage-extract 
-RUN mv ./squashfs-root/usr/bin/nvim /usr/local/bin/nvim
-RUN chmod +x /usr/local/bin/nvim
+#RUN wget https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
+#RUN chmod +x nvim.appimage
+#RUN ./nvim.appimage --appimage-extract 
+#RUN mv ./squashfs-root/usr/bin/nvim /usr/local/bin/nvim
+#RUN chmod +x /usr/local/bin/nvim
 
 # INSTALL PACKER FOR NEOVIM
 RUN git clone --depth 1 https://github.com/wbthomason/packer.nvim /home/${user}/.local/share/nvim/site/pack/packer/start/packer.nvim
