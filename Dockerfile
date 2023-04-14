@@ -49,20 +49,18 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | s
 
 
 # NEOVIM 0.8.6
-RUN wget https://github.com/neovim/neovim/releases/download/v0.8.3/nvim-linux64.deb
-RUN dpkg -i --force-overwrite ./nvim-linux64.deb
-RUN rm nvim-linux64.deb
+#RUN wget https://github.com/neovim/neovim/releases/download/v0.8.3/nvim-linux64.deb
+#RUN dpkg -i --force-overwrite ./nvim-linux64.deb
+#RUN rm nvim-linux64.deb
 
 
 
 
 # NEOVIM 0.9
 #RUN wget https://github.com/neovim/neovim/releases/download/v0.8.3/nvim.appimage
-#RUN wget https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
-#RUN chmod +x nvim.appimage
-#RUN ./nvim.appimage --appimage-extract 
-#RUN mv ./squashfs-root/usr/bin/nvim /usr/local/bin/nvim
-#RUN chmod +x /usr/local/bin/nvim
+RUN wget https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
+RUN chmod +x nvim.appimage
+RUN ./nvim.appimage --appimage-extract 
 
 # INSTALL PACKER FOR NEOVIM
 RUN git clone --depth 1 https://github.com/wbthomason/packer.nvim /home/${user}/.local/share/nvim/site/pack/packer/start/packer.nvim
@@ -100,7 +98,21 @@ RUN ln /home/${user}/dotfiles/.gitconfig /home/${user}/.gitconfig
 RUN git clone https://github.com/erikw/tmux-powerline.git /home/${user}/.config/tmux/tmux-powerline
 
 
+
+
 # MAKE SURE THE USER OWNS ALL THE THINGS IN THEIR HOME
 RUN chown -R ${user}:${user} /home/${user}
+
+RUN apt-get install locales locales-all -y
+# Set the locale
+RUN locale-gen en_US.UTF-8  
+ENV LANG en_US.UTF-8  
+ENV LANGUAGE en_US:en  
+ENV LC_ALL en_US.UTF-8  
+
+
+RUN python3 -m pip install ansible
+
+RUN echo "PATH=/squashfs-root/usr/bin:/home/${user}/.local/bin:$PATH" >> /home/${user}/.zshrc
 
 ENTRYPOINT service ssh restart && bash

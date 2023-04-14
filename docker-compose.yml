@@ -5,6 +5,7 @@ services:
   stormbian:
     image: jamesstorm/stormbian
     container_name: ${APPNAME} 
+    hostname: ${APPNAME}
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
