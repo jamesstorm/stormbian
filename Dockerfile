@@ -97,22 +97,31 @@ RUN ln /home/${user}/dotfiles/.gitconfig /home/${user}/.gitconfig
 # TMUX POWERLINE
 RUN git clone https://github.com/erikw/tmux-powerline.git /home/${user}/.config/tmux/tmux-powerline
 
-
+# Grab assorted installer scripts for use to excute at their pleasure.
+RUN git clone https://github.com/jamesstorm/installers /home/${user}/installers
 
 
 # MAKE SURE THE USER OWNS ALL THE THINGS IN THEIR HOME
 RUN chown -R ${user}:${user} /home/${user}
 
 RUN apt-get install locales locales-all -y
-# Set the locale
+
+
+# Set the locale because ansible-vault will not work without it. 
 RUN locale-gen en_US.UTF-8  
 ENV LANG en_US.UTF-8  
 ENV LANGUAGE en_US:en  
 ENV LC_ALL en_US.UTF-8  
 
+ENV TZ="America/Toronto"
 
 RUN python3 -m pip install ansible
 
+# Some things (like nvim and ansible)  were installed in places that PATH does not know. Fix that. 
 RUN echo "PATH=/squashfs-root/usr/bin:/home/${user}/.local/bin:$PATH" >> /home/${user}/.zshrc
+
+# Set the timezone to 
+RUN ln -sf /usr/share/zoneinfo/America/Toronto /etc/localtime
+
 
 ENTRYPOINT service ssh restart && bash
