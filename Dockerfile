@@ -56,7 +56,7 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | s
 
 
 
-# NEOVIM 0.9
+# NEOVIM stable
 #RUN wget https://github.com/neovim/neovim/releases/download/v0.8.3/nvim.appimage
 RUN wget https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
 RUN chmod +x nvim.appimage
@@ -72,7 +72,7 @@ RUN rm ripgrep_13.0.0_amd64.deb
 # CREATE THE USER
 RUN groupadd -g 1000 ${user} 
 RUN useradd -rm -d /home/${user} -s /bin/zsh -u 1000 -g 1000 -G sudo -p "$(openssl passwd -1 ${password})" ${user}
-#RUN /setup/setup.sh
+RUN mkdir /home/${user}/.ssh
 
 
 # SET UP NEOVIM CONFIG WITH MY PREFS 

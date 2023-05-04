@@ -13,6 +13,7 @@ services:
       - ${PORT}:22
     volumes:
       - ${APPDATA}:/appdata
+      - ${pubkey}:/home/${user}/.ssh/authorized_keys
     restart: always
     tty: true
 
