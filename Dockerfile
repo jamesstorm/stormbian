@@ -115,7 +115,7 @@ ENV LC_ALL en_US.UTF-8
 
 ENV TZ="America/Toronto"
 
-RUN python3 -m pip install ansible
+RUN apt -y install ansible-core
 
 # Some things (like nvim and ansible)  were installed in places that PATH does not know. Fix that. 
 RUN echo "PATH=/squashfs-root/usr/bin:/home/${user}/.local/bin:$PATH" >> /home/${user}/.zshrc

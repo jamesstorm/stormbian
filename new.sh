@@ -57,13 +57,8 @@ mkdir -p ${PROJECTLOCATON}/${NAME}/appdata
 currentuser=$(who | awk 'NR==1{print $1}')
 echo "#!/bin/sh\n\nssh -p ${PORT} james@localhost" >>$PROJECTLOCATON/$NAME/$NAME
 chmod +x ${PROJECTLOCATON}/${NAME}/${NAME}
-<<<<<<< HEAD
 chown -R ${currentuser} ${PROJECTLOCATON}/${NAME}
-ln ${PROJECTLOCATON}/${NAME}/${NAME} /usr/local/bin/${NAME} 
-=======
-chown -R ${currentuser}:${currentuser} ${PROJECTLOCATON}/${NAME}
 ln ${PROJECTLOCATON}/${NAME}/${NAME} /usr/local/bin/${NAME}
->>>>>>> 64937e855bbee901a85bd6e8450db96b5069208b
 cp ./docker-compose.yml ${PROJECTLOCATON}/${NAME}/
 cp ./.env ${PROJECTLOCATON}/${NAME}/
 cd ${PROJECTLOCATON}/${NAME}
